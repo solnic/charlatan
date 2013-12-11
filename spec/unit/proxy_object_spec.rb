@@ -37,4 +37,14 @@ describe ProxyObject do
   it 'does not respond unknown method names' do
     expect(proxy).not_to respond_to(:no_idea_what_you_want)
   end
+
+  it 'forwards multiple levels down to the last target' do
+    proxy1 = Class.new { include ProxyObject.new(:arr) }
+    proxy2 = Class.new { include ProxyObject.new(:proxy1) }
+    proxy3 = Class.new { include ProxyObject.new(:proxy2) }
+
+    object = proxy3.new(proxy2.new(proxy1.new([1, 2, 3])))
+
+    expect(object.size).to be(3)
+  end
 end
