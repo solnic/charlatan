@@ -1,47 +1,49 @@
 require "proxy_object/version"
 
-module ProxyObject
+# ProxyObject turns your object into a proxy which will forward all method missing
+# calls to object it's wrapping
+#
+# @example
+#
+#   class UserPresenter
+#     include ProxyObject.new(:user)
+#   end
+#
+#   user = OpenStruct.new(:name => "Jane")
+#   presenter = user.name # => "Jane"
+#   presenter.user == user # => true
+#
+class ProxyObject < Module
+  attr_reader :name
 
-  def self.included(descendant)
-    methods = descendant.superclass.public_instance_methods(false).map(&:to_s)
-    descendant.send :undef_method, *methods
-    descendant.extend(Constructor)
-    super
-  end
+  def initialize(name)
+    attr_reader name
 
-  module Constructor
-
-    def new(*args)
-      proxy = super(*args)
-      decorated_object = args.first
-      proxy.instance_variable_set '@__decorated_class', decorated_object.class
-      proxy.instance_variable_set '@__decorated_object', decorated_object
-      proxy.instance_variable_set '@__args', args[1..args.size]
-      proxy
+    define_method(:initialize) do |*args, &block|
+      instance_variable_set("@#{name}", args.first)
+      @__proxy_args = args[1..args.size]
     end
 
-  end
+    define_method(:method_missing) do |method_name, *args, &block|
+      target = send(name)
 
-  private
+      if target.respond_to?(method_name)
+        response = target.public_send(method_name, *args, &block)
 
-  def method_missing(method, *args, &block)
-    forwardable?(method) ? forward(method, *args, &block) : super
-  end
+        if response.equal?(target)
+          self
+        elsif response.kind_of?(target.class)
+          self.class.new(*@__proxy_args.unshift(response))
+        else
+          response
+        end
+      else
+        super(method_name, *args, &block)
+      end
+    end
 
-  def forwardable?(method)
-    @__decorated_object.respond_to?(method)
-  end
-
-  def forward(*args, &block)
-    response = @__decorated_object.public_send(*args, &block)
-
-    if response.equal?(@__decorated_object)
-      self
-    elsif response.kind_of?(@__decorated_class)
-      self.class.new(response, *@__args)
-    else
-      response
+    define_method(:respond_to_missing?) do |method_name, include_all|
+      send(name).respond_to?(method_name, include_all)
     end
   end
-
-end # ProxyObject
+end

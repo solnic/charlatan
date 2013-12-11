@@ -1,60 +1,40 @@
 require 'spec_helper'
 
 describe ProxyObject do
-  let(:parent_class) do
+  let(:other) { [1, 2, 3] }
+  let(:proxy) { klass.new(other, 'stuff') }
+
+  let(:klass) do
     Class.new {
-      attr_reader :name
+      include ProxyObject.new(:other)
 
-      def initialize(name)
-        @name = name
-      end
-
-      def test_new_instance(name)
-        self.class.new(name)
-      end
-
-      def test_same_instance
-        self
-      end
-
-      def test_return_value
-        'return value'
+      def initialize(other, extra, &block)
+        super(other, extra, &block)
       end
     }
   end
 
-  let(:proxy_class)  do
-    Class.new(parent_class) {
-      include ProxyObject
-
-      def initialize(parent)
-        @parent = parent
-      end
-    }
+  it 'adds reader method for target object' do
+    expect(proxy.other).to be(other)
   end
 
-  describe 'forwarding parent methods' do
-    let(:parent) { parent_class.new(:test) }
-    let(:object) { proxy_class.new(parent) }
+  it 'forwards method calls to target that return other objects' do
+    expect(proxy.size).to be(3)
+  end
 
-    context 'when method returns new instance of parent class' do
-      subject { object.test_new_instance(:other) }
+  it 'forwards method calls to target that return equal object' do
+    expect(proxy.concat([])).to eql(proxy)
+  end
 
-      it { should be_instance_of(proxy_class) }
+  it 'forwards method calls to target that return new instance of target object' do
+    expect((proxy + [4]).other).to eql(klass.new([1, 2, 3, 4], 'stuff').other)
+  end
 
-      its(:name) { should be(:other) }
-    end
+  it 'responds to methods defined on the target object' do
+    expect(proxy).to respond_to(:concat)
+  end
 
-    context 'when method returns an instance equal to the decorated instance' do
-      subject { object.test_same_instance }
-
-      it { should be(object) }
-    end
-
-    context 'when method returns an arbitrary object' do
-      subject { object.test_return_value }
-
-      it { should eql('return value') }
-    end
+  it 'does not respond unknown method names' do
+    expect(proxy).not_to respond_to(:no_idea_what_you_want)
   end
 end
