@@ -1,6 +1,26 @@
 # Charlatan
 
-TODO: Write a gem description
+Turn any object into a proxy wrapping another object. Like that:
+
+``` ruby
+require 'charlatan'
+
+class ArrayProxy
+  include Charlatan.new(:array)
+end
+
+array_proxy = ArrayProxy.new([])
+
+array_proxy << 'Hello'
+array_proxy << 'World'
+
+array_proxy.size # => 2
+array_proxy.join(' ') # => 'Hello World'
+
+# always wraps responses with the proxy class
+other = array_proxy + ['Oh Hai']
+other.class # => ArrayProxy
+```
 
 ## Installation
 
@@ -15,10 +35,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install charlatan
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 
