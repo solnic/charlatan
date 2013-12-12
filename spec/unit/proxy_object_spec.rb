@@ -47,4 +47,26 @@ describe ProxyObject do
 
     expect(object.size).to be(3)
   end
+
+  context 'when target kind is provided' do
+    subject(:proxy) { klass.new(other_class.new) }
+
+    let(:klass) do
+      Class.new { include ProxyObject.new(:other, :kind => Enumerable) }
+    end
+
+    let(:other_class) do
+      Class.new {
+        include Enumerable
+
+        def to_set
+          Set[1, 2]
+        end
+      }
+    end
+
+    it 'forwards to target and returns proxy for return value that matches the kind' do
+      expect(proxy.to_set).to be_instance_of(proxy.class)
+    end
+  end
 end

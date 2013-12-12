@@ -16,7 +16,7 @@ require "proxy_object/version"
 class ProxyObject < Module
   attr_reader :name
 
-  def initialize(name)
+  def initialize(name, options = {})
     attr_reader name
     ivar = "@#{name}"
 
@@ -27,6 +27,10 @@ class ProxyObject < Module
 
     define_method(:__proxy_target__) do
       instance_variable_get(ivar)
+    end
+
+    define_method(:__proxy_kind__) do
+      options[:kind] || __proxy_target__.class
     end
 
     include Methods
@@ -43,7 +47,7 @@ class ProxyObject < Module
 
         if response.equal?(__proxy_target__)
           self
-        elsif response.kind_of?(__proxy_target__.class)
+        elsif response.kind_of?(__proxy_kind__)
           self.class.new(*@__proxy_args.unshift(response))
         else
           response
