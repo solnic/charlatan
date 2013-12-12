@@ -22,11 +22,22 @@ other = array_proxy + ['Oh Hai']
 other.class # => ArrayProxy
 ```
 
+Planned features:
+
+* optional support for equality methods
+* optional support for kind_of? and === 
+* transparent vs restricted delegation (as in, allow all calls or explicitly specify what should be delegated)
+
 ## Why?
 
-I dunno, you tell me. I just like it. Which I cannot say about SimpleDelegator.
+The idea is that a delegator object wrapping another object delegates method calls but it preserves the original type for return values which match the wrapped object's kind. This means if you decorate an array object and you call concat on the decorator you will get an instance of the decorator back rather than an array.
 
-### TODO: explain why
+Other cool aspects of this library:
+
+* You get a constructor for free which plays well with you own, just remember to call super if you override it
+* You get attr reader for the wrapped object
+* Your object correctly handles method missing and respond_to? - something that is really easy to break accidentely in an ad-hoc custom implementation
+* You don't need to inherit from any superclass, just mix it in and call it a day
 
 ## Installation
 
