@@ -34,7 +34,7 @@ The idea is that a delegator object wrapping another object delegates method cal
 
 Other cool aspects of this library:
 
-* You get a constructor for free which plays well with you own, just remember to call super if you override it
+* You get a constructor for free which plays well with your own, just remember to call super if you override it
 * You get attr reader for the wrapped object
 * Your object correctly handles method missing and respond_to? - something that is really easy to break accidentely in an ad-hoc custom implementation
 * You don't need to inherit from any superclass, just mix it in and call it a day
@@ -59,6 +59,11 @@ Or install it yourself as:
 wrapping another object.
 * [Don Morrison](https://github.com/elskwid) for the awesome name that happened
 to be available on github and rubygems *at the same time*
+
+## Similar libraries
+
+* [casting](https://github.com/saturnflyer/casting)
+* simple_delegator in ruby stdlib
 
 ## Contributing
 
