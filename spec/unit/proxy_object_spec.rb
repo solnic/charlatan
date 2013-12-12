@@ -18,15 +18,15 @@ describe ProxyObject do
     expect(proxy.other).to be(other)
   end
 
-  it 'forwards method calls to target that return other objects' do
+  it 'forwards method calls to target that returns other objects' do
     expect(proxy.size).to be(3)
   end
 
-  it 'forwards method calls to target that return equal object' do
+  it 'forwards method calls to target that returns equal object' do
     expect(proxy.concat([])).to eql(proxy)
   end
 
-  it 'forwards method calls to target that return new instance of target object' do
+  it 'forwards method calls to target that returns a new instance of itself' do
     expect((proxy + [4]).other).to eql(klass.new([1, 2, 3, 4], 'stuff').other)
   end
 
@@ -34,7 +34,7 @@ describe ProxyObject do
     expect(proxy).to respond_to(:concat)
   end
 
-  it 'does not respond unknown method names' do
+  it 'does not respond to unknown method names' do
     expect(proxy).not_to respond_to(:no_idea_what_you_want)
   end
 
