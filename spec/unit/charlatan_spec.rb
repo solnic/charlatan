@@ -30,6 +30,10 @@ describe Charlatan do
     expect((charlatan + [4]).other).to eql(klass.new([1, 2, 3, 4], 'stuff').other)
   end
 
+  it 'forwards method calls with a block' do
+    expect(charlatan.map(&:to_s).other).to eql(%w(1 2 3))
+  end
+
   it 'does not mutate original args from the constructor' do
     2.times do
       expect((charlatan + [4]).other).to eql(klass.new([1, 2, 3, 4], 'stuff').other)
@@ -40,8 +44,16 @@ describe Charlatan do
     expect(charlatan).to respond_to(:concat)
   end
 
+  it 'does not respond to private methods defined on the target object' do
+    expect(charlatan).not_to respond_to(:Integer)
+  end
+
   it 'does not respond to unknown method names' do
     expect(charlatan).not_to respond_to(:no_idea_what_you_want)
+  end
+
+  it 'raises no method error when method is not defined' do
+    expect { charlatan.not_here}.to raise_error(NoMethodError)
   end
 
   it 'forwards multiple levels down to the last target' do

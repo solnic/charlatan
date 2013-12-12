@@ -37,8 +37,8 @@ class Charlatan < Module
   end
 
   module Methods
-    def respond_to_missing?(method_name, include_all)
-      __proxy_target__.respond_to?(method_name, include_all)
+    def respond_to_missing?(method_name, include_private)
+      __proxy_target__.respond_to?(method_name, include_private)
     end
 
     def method_missing(method_name, *args, &block)
