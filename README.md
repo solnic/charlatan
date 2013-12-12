@@ -1,4 +1,4 @@
-# ProxyObject
+# Charlatan
 
 TODO: Write a gem description
 
@@ -6,7 +6,7 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'proxy_object'
+    gem 'charlatan'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install proxy_object
+    $ gem install charlatan
 
 ## Usage
 

@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'proxy_object/version'
+require 'charlatan/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "proxy_object"
-  spec.version       = ProxyObject::VERSION
+  spec.name          = "charlatan"
+  spec.version       = Charlatan::VERSION
   spec.authors       = ["Piotr Solnica"]
   spec.email         = ["piotr.solnica@gmail.com"]
   spec.description   = %q{TODO: Write a gem description}

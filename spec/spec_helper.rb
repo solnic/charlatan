@@ -19,5 +19,5 @@ if ENV['COVERAGE'] == 'true'
   end
 end
 
-require 'proxy_object'
+require 'charlatan'
 require 'devtools/spec_helper'

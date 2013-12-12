@@ -1,19 +1,19 @@
-require "proxy_object/version"
+require "charlatan/version"
 
-# ProxyObject turns your object into a proxy which will forward all method missing
+# Charlatan turns your object into a proxy which will forward all method missing
 # calls to object it's wrapping
 #
 # @example
 #
 #   class UserPresenter
-#     include ProxyObject.new(:user)
+#     include Charlatan.new(:user)
 #   end
 #
 #   user = OpenStruct.new(:name => "Jane")
 #   presenter = user.name # => "Jane"
 #   presenter.user == user # => true
 #
-class ProxyObject < Module
+class Charlatan < Module
   attr_reader :name
 
   def initialize(name, options = {})
@@ -22,7 +22,7 @@ class ProxyObject < Module
 
     define_method(:initialize) do |*args, &block|
       instance_variable_set(ivar, args.first)
-      @__proxy_args = args[1..args.size]
+      @__proxy_args = args[1..args.size] || []
     end
 
     define_method(:__proxy_target__) do
