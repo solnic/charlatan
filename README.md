@@ -42,6 +42,11 @@ Or install it yourself as:
 
     $ gem install charlatan
 
+## Credits
+
+Thanks to [Dan Kubb](https://github.com/dkubb) for the original idea behind a proxy
+wrapping another object.
+
 ## Contributing
 
 1. Fork it
