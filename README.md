@@ -1,6 +1,6 @@
 # Charlatan
 
-Turn any object into a proxy wrapping another object. Like that:
+Turn any object into a proxy delegating to another object. Like that:
 
 ``` ruby
 require 'charlatan'
@@ -21,6 +21,12 @@ array_proxy.join(' ') # => 'Hello World'
 other = array_proxy + ['Oh Hai']
 other.class # => ArrayProxy
 ```
+
+## Why?
+
+I dunno, you tell me. I just like it. Which I cannot say about SimpleDelegator.
+
+### TODO: explain why
 
 ## Installation
 
