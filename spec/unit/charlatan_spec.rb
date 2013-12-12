@@ -22,12 +22,18 @@ describe Charlatan do
     expect(charlatan.size).to be(3)
   end
 
-  it 'forwards method calls to target that returns equal object' do
-    expect(charlatan.concat([])).to eql(charlatan)
+  it 'forwards method calls to target that returns equal object and returns self' do
+    expect(charlatan.concat([])).to equal(charlatan)
   end
 
   it 'forwards method calls to target that returns a new instance of itself' do
     expect((charlatan + [4]).other).to eql(klass.new([1, 2, 3, 4], 'stuff').other)
+  end
+
+  it 'does not mutate original args from the constructor' do
+    2.times do
+      expect((charlatan + [4]).other).to eql(klass.new([1, 2, 3, 4], 'stuff').other)
+    end
   end
 
   it 'responds to methods defined on the target object' do

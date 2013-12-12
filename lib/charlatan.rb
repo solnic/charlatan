@@ -48,7 +48,7 @@ class Charlatan < Module
         if response.equal?(__proxy_target__)
           self
         elsif response.kind_of?(__proxy_kind__)
-          self.class.new(*@__proxy_args.unshift(response))
+          self.class.new(*[response]+@__proxy_args)
         else
           response
         end
