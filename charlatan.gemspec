@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Charlatan::VERSION
   spec.authors       = ["Piotr Solnica"]
   spec.email         = ["piotr.solnica@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.descriptio    = %q{Neat delegation for ruby objects}
+  spec.summary       = spec.summary
+  spec.homepage      = "https://github.com/solnic/charlatan"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
