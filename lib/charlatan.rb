@@ -9,8 +9,10 @@ require "charlatan/version"
 #     include Charlatan.new(:user)
 #   end
 #
-#   user = OpenStruct.new(:name => "Jane")
-#   presenter = user.name # => "Jane"
+#   user      = OpenStruct.new(:name => "Jane")
+#   presenter = UserPresenter.new(user)
+#
+#   user.name # => "Jane"
 #   presenter.user == user # => true
 #
 class Charlatan < Module
