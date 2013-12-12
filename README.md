@@ -44,8 +44,10 @@ Or install it yourself as:
 
 ## Credits
 
-Thanks to [Dan Kubb](https://github.com/dkubb) for the original idea behind a proxy
+* [Dan Kubb](https://github.com/dkubb) for the original idea behind a proxy
 wrapping another object.
+* [Don Morrison](https://github.com/elskwid) for the awesome name that happened
+to be available on github and rubygems *at the same time*
 
 ## Contributing
 
