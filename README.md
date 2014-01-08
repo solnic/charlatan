@@ -1,5 +1,17 @@
 # Charlatan
 
+[![Gem Version](https://badge.fury.io/rb/charlatan.png)][gem]
+[![Build Status](https://secure.travis-ci.org/solnic/charlatan.png?branch=master)][travis]
+[![Dependency Status](https://gemnasium.com/solnic/charlatan.png)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/solnic/charlatan.png)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/solnic/charlatan/badge.png?branch=master)][coveralls]
+
+[gem]: https://rubygems.org/gems/charlatan
+[travis]: https://travis-ci.org/solnic/charlatan
+[gemnasium]: https://gemnasium.com/solnic/charlatan
+[codeclimate]: https://codeclimate.com/github/solnic/charlatan
+[coveralls]: https://coveralls.io/r/solnic/charlatan
+
 Turn any object into a proxy delegating to another object. Like that:
 
 ``` ruby
@@ -25,7 +37,7 @@ other.class # => ArrayProxy
 Planned features:
 
 * optional support for equality methods
-* optional support for kind_of? and === 
+* optional support for kind_of? and ===
 * transparent vs restricted delegation (as in, allow all calls or explicitly specify what should be delegated)
 
 ## Why?
