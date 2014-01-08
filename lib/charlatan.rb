@@ -22,17 +22,17 @@ class Charlatan < Module
     attr_reader name
     ivar = "@#{name}"
 
+    attr_reader :__proxy_kind__, :__proxy_args__
+
     define_method(:initialize) do |proxy_target, *args, &block|
       instance_variable_set(ivar, proxy_target)
-      @__proxy_args = args
+
+      @__proxy_kind__ = options.fetch(:kind) { proxy_target.class }
+      @__proxy_args__ = args
     end
 
     define_method(:__proxy_target__) do
       instance_variable_get(ivar)
-    end
-
-    define_method(:__proxy_kind__) do
-      options[:kind] || __proxy_target__.class
     end
 
     include Methods
@@ -50,7 +50,7 @@ class Charlatan < Module
         if response.equal?(__proxy_target__)
           self
         elsif response.kind_of?(__proxy_kind__)
-          self.class.new(*[response]+@__proxy_args)
+          self.class.new(*[response]+__proxy_args__)
         else
           response
         end
