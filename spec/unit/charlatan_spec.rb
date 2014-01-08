@@ -8,6 +8,10 @@ describe Charlatan do
     Class.new {
       include Charlatan.new(:other)
 
+      def inspect
+        '#<TestClass>'
+      end
+
       def initialize(other, extra, &block)
         super(other, extra, &block)
       end
@@ -53,7 +57,10 @@ describe Charlatan do
   end
 
   it 'raises no method error when method is not defined' do
-    expect { charlatan.not_here}.to raise_error(NoMethodError)
+    expect { charlatan.not_here}.to raise_error(
+      NoMethodError,
+      /undefined method `not_here' for #<TestClass>/
+    )
   end
 
   it 'forwards multiple levels down to the last target' do
