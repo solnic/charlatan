@@ -22,9 +22,9 @@ class Charlatan < Module
     attr_reader name
     ivar = "@#{name}"
 
-    define_method(:initialize) do |*args, &block|
-      instance_variable_set(ivar, args.first)
-      @__proxy_args = args[1..args.size] || []
+    define_method(:initialize) do |proxy_target, *args, &block|
+      instance_variable_set(ivar, proxy_target)
+      @__proxy_args = args
     end
 
     define_method(:__proxy_target__) do
