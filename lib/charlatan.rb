@@ -55,7 +55,7 @@ class Charlatan < Module
           response
         end
       else
-        super(method_name, *args, &block)
+        super
       end
     end
   end
